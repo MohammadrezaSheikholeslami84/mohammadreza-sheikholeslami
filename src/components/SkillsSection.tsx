@@ -1,8 +1,16 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Code, Brain, Cog, Database, Wrench, Globe } from 'lucide-react';
+import {
+  Code, Brain, Cog, Database, Wrench, Globe,
+  Terminal, Coffee, FileCode2, DollarSign, CandlestickChart,
+  BrainCircuit, Network, MessageSquareText, Bot, TrendingUp, ScanSearch, BarChart3,
+  Cpu, Table2, Palette, Languages, Link, LineChart,
+  Server, HardDrive, GitBranch, GitMerge, Github, Container,
+  BookOpen, PenTool,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const iconMap: Record<string, typeof Code> = {
+const categoryIconMap: Record<string, LucideIcon> = {
   'laptop-code': Code,
   brain: Brain,
   cogs: Cog,
@@ -11,12 +19,43 @@ const iconMap: Record<string, typeof Code> = {
   globe: Globe,
 };
 
+const skillIconMap: Record<string, LucideIcon> = {
+  terminal: Terminal,
+  coffee: Coffee,
+  'file-code-2': FileCode2,
+  'dollar-sign': DollarSign,
+  'candlestick-chart': CandlestickChart,
+  'brain-circuit': BrainCircuit,
+  network: Network,
+  'message-square-text': MessageSquareText,
+  bot: Bot,
+  'trending-up': TrendingUp,
+  'scan-search': ScanSearch,
+  'bar-chart-3': BarChart3,
+  cog: Cog,
+  cpu: Cpu,
+  'table-2': Table2,
+  palette: Palette,
+  languages: Languages,
+  link: Link,
+  'line-chart': LineChart,
+  database: Database,
+  server: Server,
+  'hard-drive': HardDrive,
+  'git-branch': GitBranch,
+  'git-merge': GitMerge,
+  github: Github,
+  container: Container,
+  'book-open': BookOpen,
+  'pen-tool': PenTool,
+};
+
 const SkillsSection = () => {
   const { t, isRTL } = useLanguage();
   const categories = t('skills.categories') as unknown as Array<{
     name: string;
     icon: string;
-    items: (string | { name: string; icon: string })[];
+    items: { name: string; icon: string }[];
   }>;
 
   return (
@@ -49,7 +88,7 @@ const SkillsSection = () => {
         }}
       >
         {Array.isArray(categories) && categories.map((cat, idx) => {
-          const IconComponent = iconMap[cat.icon] || Code;
+          const CategoryIcon = categoryIconMap[cat.icon] || Code;
           return (
             <motion.div
               key={idx}
@@ -61,17 +100,32 @@ const SkillsSection = () => {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6, transition: { duration: 0.3 } }}
             >
-              <h3 className="text-xl font-bold mb-3 text-primary font-display flex items-center gap-2">
-                <IconComponent size={20} />
+              <h3 className="text-xl font-bold mb-4 text-primary font-display flex items-center gap-2">
+                <CategoryIcon size={20} />
                 {cat.name}
               </h3>
-              <ul className={`space-y-2 text-muted-foreground ${typeof cat.items[0] === 'string' ? `list-disc ${isRTL ? 'mr-4' : 'ml-4'}` : ''}`}>
-                {cat.items.map((item, i) => (
-                  <li key={i} className={typeof item === 'object' ? 'flex items-center gap-2' : ''}>
-                    {typeof item === 'string' ? item : item.name}
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-wrap gap-2">
+                {cat.items.map((item, i) => {
+                  const itemName = typeof item === 'string' ? item : item.name;
+                  const itemIconKey = typeof item === 'object' ? item.icon : null;
+                  const ItemIcon = itemIconKey ? skillIconMap[itemIconKey] : null;
+
+                  return (
+                    <motion.span
+                      key={i}
+                      className="skill-tag inline-flex items-center gap-1.5"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: i * 0.04 }}
+                      whileHover={{ scale: 1.08, transition: { duration: 0.2 } }}
+                    >
+                      {ItemIcon && <ItemIcon size={13} className="shrink-0" />}
+                      {itemName}
+                    </motion.span>
+                  );
+                })}
+              </div>
             </motion.div>
           );
         })}

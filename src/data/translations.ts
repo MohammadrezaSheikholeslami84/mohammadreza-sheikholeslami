@@ -19,7 +19,7 @@ export const translations: Record<string, any> = {
     },
     about: {
       title: "About Me",
-      text: `A dedicated Computer Science student at <university>Amirkabir University of Technology</university>, specializing in machine learning, SQL, and data analysis. I possess strong proficiency in Python, with practical experience leveraging <hl>NumPy</hl>, <hl>Pandas</hl>, and <hl>Matplotlib</hl> for efficient data processing and impactful visualizations. My background also includes developing robust Java-based applications using <hl>JavaFX</hl> and <hl>MySQL</hl>, complemented by a solid understanding of <hl>Git</hl> for seamless version control. With a deep grasp of deep learning and natural language processing, I am keenly interested in applying AI to solve complex real-world challenges. Additionally, I have experience in developing trading bots with <hl>MQL4</hl> and using <hl>Pine Script</hl> for insightful financial market analysis.`,
+      text: `I'm a Computer Science student at <university>Amirkabir University of Technology</university> with a GPA of <hl>19.11/20</hl>, passionate about <hl>Artificial Intelligence</hl>, <hl>Machine Learning</hl>, and <hl>Data Science</hl>. As a Teaching Assistant for AI and Advanced Programming courses under Prof. Mahdi Ghatee, I've deepened my expertise in Python, Java, and core CS concepts. I hold certifications from <hl>Stanford University</hl>, <hl>IBM</hl>, <hl>DeepLearning.AI</hl>, and <hl>Quera</hl> in ML, NLP, data analysis, and time series forecasting. My project portfolio includes a <hl>Persian Financial Chatbot</hl> powered by LangChain, ML-based news classification, salary prediction models, and a Java-based e-commerce application. I also have experience developing trading bots with <hl>MQL4</hl> and financial analysis with <hl>Pine Script</hl>. I achieved 7th place in the ATC II Algorithmic Trading Challenge at Amirkabir.`,
       queraLink: "(Quera assessment report)",
     },
     experience: {
@@ -305,7 +305,7 @@ export const translations: Record<string, any> = {
     },
     about: {
       title: "درباره من",
-      text: `دانشجوی متعهد علوم کامپیوتر در <university>دانشگاه صنعتی امیرکبیر</university>، با تخصص در یادگیری ماشین، SQL و تحلیل داده. تسلط قوی بر Python دارم، با تجربه عملی در استفاده از <hl>NumPy</hl>، <hl>Pandas</hl> و <hl>Matplotlib</hl> برای پردازش کارآمد داده و تجسم‌سازی تأثیرگذار. پیشینه من همچنین شامل توسعه برنامه‌های مبتنی بر Java با استفاده از <hl>JavaFX</hl> و <hl>MySQL</hl> است، همراه با درک قوی از <hl>Git</hl> برای کنترل نسخه. با درک عمیق یادگیری عمیق و پردازش زبان طبیعی، علاقه‌مند به کاربرد هوش مصنوعی برای حل چالش‌های پیچیده دنیای واقعی هستم. همچنین تجربه توسعه ربات‌های معاملاتی با <hl>MQL4</hl> و استفاده از <hl>Pine Script</hl> برای تحلیل بازارهای مالی را دارم.`,
+      text: `دانشجوی علوم کامپیوتر در <university>دانشگاه صنعتی امیرکبیر</university> با معدل <hl>۱۹.۱۱ از ۲۰</hl> هستم و به <hl>هوش مصنوعی</hl>، <hl>یادگیری ماشین</hl> و <hl>علم داده</hl> علاقه‌مندم. به عنوان دستیار آموزشی دروس هوش مصنوعی و برنامه‌نویسی پیشرفته زیر نظر دکتر مهدی قطعی، تخصصم را در Python، Java و مفاهیم پایه علوم کامپیوتر تعمیق داده‌ام. گواهینامه‌هایی از <hl>دانشگاه استنفورد</hl>، <hl>IBM</hl>، <hl>DeepLearning.AI</hl> و <hl>کوئرا</hl> در زمینه‌های ML، NLP، تحلیل داده و پیش‌بینی سری‌های زمانی دارم. پروژه‌هایم شامل <hl>چت‌بات مالی فارسی</hl> مبتنی بر LangChain، طبقه‌بندی اخبار با ML، مدل‌های پیش‌بینی حقوق و فروشگاه آنلاین جاوا است. همچنین تجربه توسعه ربات‌های معاملاتی با <hl>MQL4</hl> و تحلیل مالی با <hl>Pine Script</hl> را دارم. رتبه هفتم مسابقه ATC II معاملات الگوریتمی دانشگاه امیرکبیر را کسب کرده‌ام.`,
       queraLink: "(گزارش ارزیابی کوئرا)",
     },
     experience: {
@@ -316,7 +316,7 @@ export const translations: Record<string, any> = {
           place: "دانشگاه صنعتی امیرکبیر",
           location: "تهران",
           date: "مرداد ۱۴۰۴",
-          instructor: "استاد: دکتر مهدی قاطع",
+          instructor: "استاد: دکتر مهدی قطعی",
           details: [
             "<b>زبان‌های برنامه‌نویسی:</b> Python",
             "<b>مفاهیم:</b> هوش مصنوعی، یادگیری ماشین، یادگیری عمیق، علم داده",
@@ -327,7 +327,7 @@ export const translations: Record<string, any> = {
           place: "دانشگاه صنعتی امیرکبیر",
           location: "تهران",
           date: "دی ۱۴۰۳ - خرداد ۱۴۰۴",
-          instructor: "استاد: دکتر مهدی قاطع",
+          instructor: "استاد: دکتر مهدی قطعی",
           details: [
             "<b>زبان‌های برنامه‌نویسی:</b> Java",
             "<b>مفاهیم:</b> برنامه‌نویسی شیءگرا (OOP)، ساختمان داده، الگوریتم‌ها",

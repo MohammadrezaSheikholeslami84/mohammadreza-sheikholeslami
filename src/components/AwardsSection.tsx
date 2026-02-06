@@ -1,25 +1,41 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Trophy } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const AwardsSection = () => {
   const { t, isRTL } = useLanguage();
-  const ref = useScrollReveal();
   const items = t('awards.items') as unknown as Array<{
     name: string; place: string; date: string; description: string;
   }>;
 
   return (
-    <section id="awards" ref={ref} className="glass-section p-6 md:p-10 stagger-in">
-      <h2 className="section-title mb-6">
+    <motion.section
+      id="awards"
+      className="glass-section p-6 md:p-10"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <motion.h2
+        className="section-title mb-6"
+        initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
         <Trophy className={`${isRTL ? 'ml-3' : 'mr-3'}`} size={28} />
         {t('awards.title')}
-      </h2>
+      </motion.h2>
       <div className="relative">
         {Array.isArray(items) && items.map((item, idx) => (
-          <div
+          <motion.div
             key={idx}
             className={`relative ${isRTL ? 'pr-[30px]' : 'pl-[30px]'} ${idx < items.length - 1 ? 'pb-8' : ''}`}
+            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 + idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className={`timeline-dot ${isRTL ? 'right-0' : 'left-0'}`} />
             {idx < items.length - 1 && (
@@ -30,10 +46,10 @@ const AwardsSection = () => {
               <span className="university-text">{item.place}</span> | {item.date}
             </p>
             <p className="leading-relaxed text-base text-muted-foreground">{item.description}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

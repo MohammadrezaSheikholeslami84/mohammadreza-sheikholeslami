@@ -1,23 +1,53 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Award, ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const CertificationsSection = () => {
   const { t, isRTL } = useLanguage();
-  const ref = useScrollReveal();
   const items = t('certifications.items') as unknown as Array<{
     name: string; issuer: string; date: string; details: string[]; tags: string[]; link: string;
   }>;
 
   return (
-    <section id="certifications" ref={ref} className="glass-section p-6 md:p-10 stagger-in">
-      <h2 className="section-title mb-6">
+    <motion.section
+      id="certifications"
+      className="glass-section p-6 md:p-10"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <motion.h2
+        className="section-title mb-6"
+        initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
         <Award className={`${isRTL ? 'ml-3' : 'mr-3'}`} size={28} />
         {t('certifications.title')}
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      </motion.h2>
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+        }}
+      >
         {Array.isArray(items) && items.map((item, idx) => (
-          <div key={idx} className="glass-card p-6 flex flex-col stagger-in">
+          <motion.div
+            key={idx}
+            className="glass-card p-6 flex flex-col"
+            variants={{
+              hidden: { opacity: 0, y: 30, scale: 0.95 },
+              visible: { opacity: 1, y: 0, scale: 1 },
+            }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={{ y: -6, transition: { duration: 0.3 } }}
+          >
             <h3 className="text-xl font-bold mb-2 text-primary font-display">{item.name}</h3>
             <p className="text-sm mb-3 text-muted-foreground">
               <span className="university-text">{item.issuer}</span> | {item.date}
@@ -37,10 +67,10 @@ const CertificationsSection = () => {
                 {t('viewCredential')} <ExternalLink size={12} />
               </a>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 

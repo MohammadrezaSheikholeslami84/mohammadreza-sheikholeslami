@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Menu, X, Mail, Github, Linkedin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navKeys = ['home', 'about', 'experience', 'education', 'skills', 'certifications', 'projects', 'awards', 'contact'];
 
@@ -38,7 +39,12 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="glass-navbar fixed w-full top-0 z-50 shadow-xl">
+      <motion.nav
+        className="glass-navbar fixed w-full top-0 z-50 shadow-xl"
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="container mx-auto px-6 py-3 flex justify-between items-center">
           <button onClick={() => scrollTo('home')} className="text-xl font-bold md:text-2xl text-foreground font-display">
             {t('hero.name')}
@@ -91,35 +97,61 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile menu */}
-      <div
-        className={`fixed inset-0 bg-background/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-center transition-transform duration-300 ${
-          mobileOpen ? 'translate-x-0' : isRTL ? '-translate-x-full' : 'translate-x-full'
-        }`}
-      >
-        <button onClick={() => setMobileOpen(false)} className="absolute top-6 right-6 text-foreground">
-          <X size={28} />
-        </button>
-        <ul className="space-y-6 text-center">
-          {navKeys.map(key => (
-            <li key={key}>
-              <button
-                onClick={() => scrollTo(key)}
-                className="text-xl font-semibold text-foreground hover:text-primary transition-colors"
-              >
-                {t(`nav.${key}`)}
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="flex gap-6 mt-8">
-          <a href="mailto:mr.sheikholeslami84@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors"><Mail size={22} /></a>
-          <a href="https://github.com/MohammadrezaSheikholeslami84" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><Github size={22} /></a>
-          <a href="https://www.linkedin.com/in/mohammadrezasheikholeslami/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><Linkedin size={22} /></a>
-        </div>
-      </div>
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            className="fixed inset-0 bg-background/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <button onClick={() => setMobileOpen(false)} className="absolute top-6 right-6 text-foreground">
+              <X size={28} />
+            </button>
+            <motion.ul
+              className="space-y-6 text-center"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+              }}
+            >
+              {navKeys.map(key => (
+                <motion.li
+                  key={key}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <button
+                    onClick={() => scrollTo(key)}
+                    className="text-xl font-semibold text-foreground hover:text-primary transition-colors"
+                  >
+                    {t(`nav.${key}`)}
+                  </button>
+                </motion.li>
+              ))}
+            </motion.ul>
+            <motion.div
+              className="flex gap-6 mt-8"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+            >
+              <a href="mailto:mr.sheikholeslami84@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors"><Mail size={22} /></a>
+              <a href="https://github.com/MohammadrezaSheikholeslami84" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><Github size={22} /></a>
+              <a href="https://www.linkedin.com/in/mohammadrezasheikholeslami/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><Linkedin size={22} /></a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

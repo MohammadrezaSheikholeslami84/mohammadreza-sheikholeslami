@@ -38,11 +38,11 @@
 
     --university: 30 85% 34%;
     --highlight: 213 94% 73%;
-    --glass: 222 47% 7% / 0.7;
-    --glass-card: 217 33% 17% / 0.6;
-    --glass-border: 217 91% 60% / 0.2;
-    --glass-border-hover: 217 91% 60% / 0.5;
-    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.3);
+    --glass: 222 47% 7% / 0.65;
+    --glass-card: 217 33% 14% / 0.55;
+    --glass-border: 217 91% 60% / 0.15;
+    --glass-border-hover: 217 91% 60% / 0.45;
+    --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(56, 120, 223, 0.1);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -69,25 +69,42 @@
   [dir="rtl"] {
     font-family: 'Vazirmatn', 'Inter', sans-serif;
   }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
 }
 
 @layer components {
   .glass-section {
-    @apply bg-[hsl(var(--glass))] backdrop-blur-[10px] border border-[hsl(var(--glass-border))] rounded-[1.25rem];
+    @apply bg-[hsl(var(--glass))] backdrop-blur-[12px] border border-[hsl(var(--glass-border))] rounded-2xl;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
 
   .glass-card {
     @apply bg-[hsl(var(--glass-card))] border border-[hsl(var(--glass-border))] rounded-xl transition-all duration-300;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   }
 
   .glass-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-hover);
     border-color: hsl(var(--glass-border-hover));
   }
 
   .glass-navbar {
-    @apply bg-[hsl(var(--glass))] backdrop-blur-[12px] border-b border-[hsl(var(--glass-border))];
+    @apply bg-[hsl(var(--glass))] backdrop-blur-[14px] border-b border-[hsl(var(--glass-border))];
   }
 
   .section-title {
@@ -100,11 +117,21 @@
   }
 
   .skill-tag {
-    @apply bg-primary/15 text-[hsl(var(--highlight))] px-3 py-1 rounded-full text-xs font-medium;
+    @apply bg-primary/10 text-[hsl(var(--highlight))] px-3 py-1.5 rounded-full text-xs font-medium border border-primary/10 transition-colors duration-200;
+  }
+
+  .skill-tag:hover {
+    @apply bg-primary/20 border-primary/25;
   }
 
   .hero-btn {
-    @apply px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold transition-all duration-300 hover:bg-[hsl(217,91%,70%)] hover:scale-105 inline-block;
+    @apply px-8 py-3.5 bg-primary text-primary-foreground rounded-full font-semibold transition-all duration-300 hover:shadow-lg inline-block;
+    box-shadow: 0 4px 15px rgba(56, 120, 223, 0.3);
+  }
+
+  .hero-btn:hover {
+    box-shadow: 0 6px 25px rgba(56, 120, 223, 0.45);
+    transform: translateY(-2px);
   }
 
   .nav-link-underline {
@@ -131,6 +158,7 @@
 
   .timeline-dot {
     @apply absolute top-[5px] w-[15px] h-[15px] bg-primary rounded-full border-[3px] border-background z-[1];
+    box-shadow: 0 0 10px rgba(56, 120, 223, 0.3);
   }
 
   .timeline-line {
@@ -165,7 +193,7 @@
 .stagger-in {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stagger-in.visible {

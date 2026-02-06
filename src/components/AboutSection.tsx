@@ -1,13 +1,13 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { User } from 'lucide-react';
+import profileImg from '@/assets/profile.jpg';
 
 const AboutSection = () => {
   const { t, isRTL } = useLanguage();
   const ref = useScrollReveal();
 
   const renderText = (text: string) => {
-    // Parse custom markup: <university>...</university> and <hl>...</hl>
     const parts = text.split(/(<university>.*?<\/university>|<hl>.*?<\/hl>)/g);
     return parts.map((part, i) => {
       if (part.startsWith('<university>')) {
@@ -29,12 +29,15 @@ const AboutSection = () => {
         {t('about.title')}
       </h2>
       <div className="flex flex-col md:flex-row items-center gap-8">
-        <img
-          src="https://avatars.githubusercontent.com/u/166950228?v=4"
-          alt="Mohammadreza Sheikholeslami Profile"
-          loading="lazy"
-          className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-primary shadow-xl object-cover flex-shrink-0"
-        />
+        <div className="relative group flex-shrink-0">
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-primary/10 rounded-full blur-md opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+          <img
+            src={profileImg}
+            alt="Mohammadreza Sheikholeslami Profile"
+            loading="lazy"
+            className="relative w-40 h-40 md:w-48 md:h-48 rounded-full border-[3px] border-primary/30 shadow-2xl object-cover"
+          />
+        </div>
         <p className="text-base md:text-lg leading-relaxed max-w-2xl text-muted-foreground">
           {renderText(t('about.text'))}
           {' '}

@@ -1,12 +1,19 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   return (
-    <footer className="text-foreground py-6 mt-16 relative z-10">
+    <motion.footer
+      className="text-foreground py-6 mt-16 relative z-10"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="container mx-auto px-6 text-center">
         <p className="text-sm md:text-base">
           &copy; {year} {t('hero.name')}. {t('footer.rights')}
@@ -15,7 +22,7 @@ const Footer = () => {
           {t('footer.builtWith')} <Heart size={12} className="text-red-500" /> {t('footer.andCoffee')}
         </p>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

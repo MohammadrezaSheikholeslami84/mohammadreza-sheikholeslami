@@ -25,17 +25,17 @@ const AboutSection = () => {
     <motion.section
       id="about"
       className="glass-section p-6 md:p-10"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       <motion.h2
         className="section-title mb-6"
-        initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+        initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
       >
         <User className={`${isRTL ? 'ml-3' : 'mr-3'}`} size={28} />
         {t('about.title')}
@@ -43,10 +43,11 @@ const AboutSection = () => {
       <div className="flex flex-col md:flex-row items-center gap-8">
         <motion.div
           className="relative group flex-shrink-0"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.7, rotate: -5 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-primary/10 rounded-full blur-md opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
           <img
@@ -58,10 +59,10 @@ const AboutSection = () => {
         </motion.div>
         <motion.p
           className="text-base md:text-lg leading-relaxed max-w-2xl text-muted-foreground"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
           {renderText(t('about.text'))}
           {' '}

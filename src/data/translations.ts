@@ -16,6 +16,7 @@ export const translations: Record<string, any> = {
       name: "Mohammadreza Sheikholeslami",
       subtitle: "A passionate Computer Science student building innovative solutions with a focus on Machine Learning and Data Science.",
       cta: "Learn More About Me",
+      downloadCv: "Download CV",
     },
     about: {
       title: "About Me",
@@ -333,6 +334,7 @@ export const translations: Record<string, any> = {
       name: "محمدرضا شیخ الاسلامی",
       subtitle: "دانشجوی علاقه‌مند علوم کامپیوتر که راه‌حل‌های نوآورانه با تمرکز بر یادگیری ماشین و علم داده می‌سازد.",
       cta: "بیشتر درباره من بدانید",
+      downloadCv: "دانلود رزومه",
     },
     about: {
       title: "درباره من",

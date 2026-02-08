@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
+
 interface Particle {
   x: number;
   y: number;
@@ -14,6 +15,13 @@ interface Particle {
 const WaveBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { isDark } = useTheme();
+  const isDarkRef = useRef(isDark);
+
+  // Keep ref in sync so the animation loop always reads the latest value
+  useEffect(() => {
+    isDarkRef.current = isDark;
+  }, [isDark]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -92,11 +100,11 @@ const WaveBackground = () => {
 
     const animate = () => {
       if (!ctx || !canvas) return;
+      const dark = isDarkRef.current;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (isDark) {
-        // Deep gradient background for dark mode
+      if (dark) {
         const gradient = ctx.createLinearGradient(0, 0, canvas.width * 0.3, canvas.height);
         gradient.addColorStop(0, '#060d1f');
         gradient.addColorStop(0.3, '#0a1628');
@@ -104,7 +112,6 @@ const WaveBackground = () => {
         gradient.addColorStop(1, '#070e20');
         ctx.fillStyle = gradient;
       } else {
-        // Soft gradient for light mode
         const gradient = ctx.createLinearGradient(0, 0, canvas.width * 0.3, canvas.height);
         gradient.addColorStop(0, '#e8eef7');
         gradient.addColorStop(0.3, '#dce5f4');
@@ -114,10 +121,10 @@ const WaveBackground = () => {
       }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Floating orbs for depth
+      // Floating orbs
       const orbTime = time * 0.3;
-      const orbAlpha = isDark ? 0.03 : 0.06;
-      const orbColor = isDark ? '56, 120, 223' : '80, 130, 200';
+      const orbAlpha = dark ? 0.03 : 0.06;
+      const orbColor = dark ? '56, 120, 223' : '80, 130, 200';
       drawOrb(
         canvas.width * 0.15 + Math.sin(orbTime * 0.7) * 80,
         canvas.height * 0.25 + Math.cos(orbTime * 0.5) * 60,
@@ -137,12 +144,12 @@ const WaveBackground = () => {
         `rgba(${orbColor}, ${orbAlpha * 0.7})`
       );
 
-      // Update and draw particles
+      // Particles
+      const particleColor = dark ? '140, 180, 255' : '60, 100, 180';
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Mouse interaction - subtle repulsion
         const dx = p.x - mouseX;
         const dy = p.y - mouseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -152,39 +159,36 @@ const WaveBackground = () => {
           p.vy += (dy / dist) * force;
         }
 
-        // Damping
         p.vx *= 0.99;
         p.vy *= 0.99;
 
-        // Wrap around
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
-        // Pulsing opacity
         const pulse = Math.sin(time * p.pulseSpeed * 60 + p.pulsePhase) * 0.3 + 0.7;
         const alpha = p.opacity * pulse;
 
-        const particleColor = isDark ? '140, 180, 255' : '60, 100, 180';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${particleColor}, ${alpha})`;
         ctx.fill();
       });
 
-      // Draw connections between close particles
+      // Particle connections
+      const lineColor = dark ? '100, 160, 255' : '60, 100, 180';
+      const lineAlphaMax = dark ? 0.08 : 0.12;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
-            const lineColor = isDark ? '100, 160, 255' : '60, 100, 180';
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${lineColor}, ${(1 - dist / 120) * (isDark ? 0.08 : 0.12)})`;
+            ctx.strokeStyle = `rgba(${lineColor}, ${(1 - dist / 120) * lineAlphaMax})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -193,15 +197,26 @@ const WaveBackground = () => {
 
       const h = canvas.height;
 
-      // Wave layers with more variety
-      drawWave(h * 0.50, 30, 0.002, 0.3, 'rgba(12, 35, 60, 0.5)', 0);
-      drawWave(h * 0.55, 25, 0.003, 0.4, 'rgba(16, 42, 67, 0.45)', 1);
-      drawWave(h * 0.60, 22, 0.004, 0.5, 'rgba(16, 42, 67, 0.4)', 2);
-      drawWave(h * 0.65, 18, 0.005, 0.6, 'rgba(20, 50, 80, 0.35)', 3);
-      drawWave(h * 0.70, 15, 0.006, 0.7, 'rgba(25, 60, 95, 0.3)', 4);
-      drawWave(h * 0.75, 12, 0.007, 0.8, 'rgba(30, 70, 110, 0.25)', 5);
-      drawWave(h * 0.80, 10, 0.008, 0.9, 'rgba(35, 80, 125, 0.2)', 6);
-      drawWave(h * 0.85, 8, 0.009, 1.0, 'rgba(40, 90, 140, 0.15)', 7);
+      // Theme-aware wave colors
+      if (dark) {
+        drawWave(h * 0.50, 30, 0.002, 0.3, 'rgba(12, 35, 60, 0.5)', 0);
+        drawWave(h * 0.55, 25, 0.003, 0.4, 'rgba(16, 42, 67, 0.45)', 1);
+        drawWave(h * 0.60, 22, 0.004, 0.5, 'rgba(16, 42, 67, 0.4)', 2);
+        drawWave(h * 0.65, 18, 0.005, 0.6, 'rgba(20, 50, 80, 0.35)', 3);
+        drawWave(h * 0.70, 15, 0.006, 0.7, 'rgba(25, 60, 95, 0.3)', 4);
+        drawWave(h * 0.75, 12, 0.007, 0.8, 'rgba(30, 70, 110, 0.25)', 5);
+        drawWave(h * 0.80, 10, 0.008, 0.9, 'rgba(35, 80, 125, 0.2)', 6);
+        drawWave(h * 0.85, 8, 0.009, 1.0, 'rgba(40, 90, 140, 0.15)', 7);
+      } else {
+        drawWave(h * 0.50, 30, 0.002, 0.3, 'rgba(160, 190, 220, 0.25)', 0);
+        drawWave(h * 0.55, 25, 0.003, 0.4, 'rgba(150, 180, 210, 0.22)', 1);
+        drawWave(h * 0.60, 22, 0.004, 0.5, 'rgba(140, 170, 205, 0.20)', 2);
+        drawWave(h * 0.65, 18, 0.005, 0.6, 'rgba(130, 165, 200, 0.18)', 3);
+        drawWave(h * 0.70, 15, 0.006, 0.7, 'rgba(120, 155, 195, 0.16)', 4);
+        drawWave(h * 0.75, 12, 0.007, 0.8, 'rgba(110, 150, 190, 0.14)', 5);
+        drawWave(h * 0.80, 10, 0.008, 0.9, 'rgba(100, 140, 185, 0.12)', 6);
+        drawWave(h * 0.85, 8, 0.009, 1.0, 'rgba(90, 130, 180, 0.10)', 7);
+      }
 
       time += 0.015;
       animationId = requestAnimationFrame(animate);

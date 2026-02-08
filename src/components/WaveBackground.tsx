@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-
+import { useTheme } from '@/contexts/ThemeContext';
 interface Particle {
   x: number;
   y: number;
@@ -13,7 +13,7 @@ interface Particle {
 
 const WaveBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const { isDark } = useTheme();
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -95,34 +95,46 @@ const WaveBackground = () => {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Deep gradient background with more richness
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width * 0.3, canvas.height);
-      gradient.addColorStop(0, '#060d1f');
-      gradient.addColorStop(0.3, '#0a1628');
-      gradient.addColorStop(0.6, '#0d1b35');
-      gradient.addColorStop(1, '#070e20');
-      ctx.fillStyle = gradient;
+      if (isDark) {
+        // Deep gradient background for dark mode
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width * 0.3, canvas.height);
+        gradient.addColorStop(0, '#060d1f');
+        gradient.addColorStop(0.3, '#0a1628');
+        gradient.addColorStop(0.6, '#0d1b35');
+        gradient.addColorStop(1, '#070e20');
+        ctx.fillStyle = gradient;
+      } else {
+        // Soft gradient for light mode
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width * 0.3, canvas.height);
+        gradient.addColorStop(0, '#e8eef7');
+        gradient.addColorStop(0.3, '#dce5f4');
+        gradient.addColorStop(0.6, '#d0ddf0');
+        gradient.addColorStop(1, '#e4ecf7');
+        ctx.fillStyle = gradient;
+      }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Floating orbs for depth
       const orbTime = time * 0.3;
+      const orbAlpha = isDark ? 0.03 : 0.06;
+      const orbColor = isDark ? '56, 120, 223' : '80, 130, 200';
       drawOrb(
         canvas.width * 0.15 + Math.sin(orbTime * 0.7) * 80,
         canvas.height * 0.25 + Math.cos(orbTime * 0.5) * 60,
         200,
-        'rgba(56, 120, 223, 0.03)'
+        `rgba(${orbColor}, ${orbAlpha})`
       );
       drawOrb(
         canvas.width * 0.8 + Math.sin(orbTime * 0.4) * 100,
         canvas.height * 0.15 + Math.cos(orbTime * 0.6) * 70,
         250,
-        'rgba(100, 150, 255, 0.025)'
+        `rgba(${orbColor}, ${orbAlpha * 0.8})`
       );
       drawOrb(
         canvas.width * 0.5 + Math.cos(orbTime * 0.3) * 120,
         canvas.height * 0.6 + Math.sin(orbTime * 0.5) * 80,
         300,
-        'rgba(56, 120, 223, 0.02)'
+        `rgba(${orbColor}, ${orbAlpha * 0.7})`
       );
 
       // Update and draw particles
@@ -154,9 +166,10 @@ const WaveBackground = () => {
         const pulse = Math.sin(time * p.pulseSpeed * 60 + p.pulsePhase) * 0.3 + 0.7;
         const alpha = p.opacity * pulse;
 
+        const particleColor = isDark ? '140, 180, 255' : '60, 100, 180';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(140, 180, 255, ${alpha})`;
+        ctx.fillStyle = `rgba(${particleColor}, ${alpha})`;
         ctx.fill();
       });
 
@@ -167,10 +180,11 @@ const WaveBackground = () => {
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
+            const lineColor = isDark ? '100, 160, 255' : '60, 100, 180';
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(100, 160, 255, ${(1 - dist / 120) * 0.08})`;
+            ctx.strokeStyle = `rgba(${lineColor}, ${(1 - dist / 120) * (isDark ? 0.08 : 0.12)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

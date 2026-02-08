@@ -201,6 +201,20 @@ export const translations: Record<string, any> = {
           link: "https://quera.org/certificate/3NJ7M3tK/",
         },
         {
+          name: "Sequences, Time Series and Prediction",
+          issuer: "DeepLearning.AI (Coursera)",
+          date: "Aug 2025",
+          details: [
+            "Learned the fundamentals of time-series analysis and sequence modeling.",
+            "Built deep learning models using TensorFlow, including RNNs, LSTMs, and 1D ConvNets.",
+            "Developed a sunspot forecasting model using real-world time-series data.",
+            "Gained experience in creating windowed datasets, trend detection, and forecasting.",
+            "Understood how to optimize and evaluate predictive models with proper metrics.",
+          ],
+          tags: ["TensorFlow", "Deep Learning", "Time Series Forecasting", "Neural Networks"],
+          link: "https://www.coursera.org/account/accomplishments/verify/KDXMDQIGNGJH",
+        },
+        {
           name: "Databases and SQL for Data Science",
           issuer: "IBM",
           date: "Nov 2024 - Jan 2025",
@@ -227,20 +241,7 @@ export const translations: Record<string, any> = {
           tags: ["Git", "GitHub"],
           link: "https://quera.org/media/public/certificate/d93b4054a1a64c7d83a385e63c8bc194.png",
         },
-        {
-          name: "Sequences, Time Series and Prediction",
-          issuer: "DeepLearning.AI (Coursera)",
-          date: "Aug 2025",
-          details: [
-            "Learned the fundamentals of time-series analysis and sequence modeling.",
-            "Built deep learning models using TensorFlow, including RNNs, LSTMs, and 1D ConvNets.",
-            "Developed a sunspot forecasting model using real-world time-series data.",
-            "Gained experience in creating windowed datasets, trend detection, and forecasting.",
-            "Understood how to optimize and evaluate predictive models with proper metrics.",
-          ],
-          tags: ["TensorFlow", "Deep Learning", "Time Series Forecasting", "Neural Networks"],
-          link: "https://www.coursera.org/account/accomplishments/verify/KDXMDQIGNGJH",
-        },
+        
       ],
     },
     projects: {
@@ -253,6 +254,12 @@ export const translations: Record<string, any> = {
           link: "https://github.com/MohammadrezaSheikholeslami84/Persian-Financial-Chatbot",
         },
         {
+          name: "AUT AI Diabetes Project",
+          description: "Designed an educational AI project for undergraduate students at Amirkabir University of Technology, involving exploratory data analysis, clustering, and classification on a large-scale diabetes clinical dataset, with model evaluation and hyperparameter tuning.",
+          tags: ["Data Analysis", "Machine Learning", "EDA", "Scikit-Learn", "Pandas", "Matplotlib"],
+          link: "https://github.com/MohammadrezaSheikholeslami84/AUT-AI-Diabetes-Project",
+        },
+        {
           name: "News Text Classification",
           description: "This project implements a machine learning-based news text classification system. The goal is to categorize news articles into predefined categories (e.g., sports, politics, business) using their content. The project leverages various natural language processing (NLP) techniques for text preprocessing and machine learning models for accurate classification. Implemented in Python and Jupyter notebooks, it offers a clear and interactive demonstration of the underlying logic.",
           tags: ["Machine Learning", "NLP", "Data Science", "Python", "Scikit-Learn"],
@@ -260,7 +267,7 @@ export const translations: Record<string, any> = {
         },
         {
           name: "Salary-Prediction",
-          description: "I built a machine learning model to predict whether an individual earns more than $50K per year using the UCI Adult Income dataset. The project involved end-to-end data handling — from importing and cleaning raw data to feature engineering and preprocessing. I explored demographic patterns through visualizations and applied several classification algorithms, including Logistic Regression, Decision Tree, and Random Forest. To enhance performance, I implemented hyperparameter tuning using GridSearchCV and cross-validation, which significantly improved model accuracy. The XGBoost model emerged as the top performer with an accuracy of ~86%. I also conducted a model comparison based on precision, recall, and F1-score to ensure balanced performance. This project helped me deepen my understanding of supervised learning pipelines and real-world data handling.",
+          description: "Developed an end-to-end machine learning pipeline using the UCI Adult Income dataset to predict income levels (>50K), covering data collection, cleaning, preprocessing, feature engineering, and exploratory data analysis with visualizations. Trained and evaluated multiple classification models including Logistic Regression, Decision Tree, Random Forest, and XGBoost. Applied hyperparameter tuning with GridSearchCV and cross-validation, achieving ~86% accuracy with XGBoost. Performed comprehensive model comparison using accuracy, precision, recall, and F1-score",
           tags: ["Data Analysis", "Data Science", "Machine Learning", "EDA", "Numpy", "Pandas", "Matplotlib"],
           link: "https://github.com/MohammadrezaSheikholeslami84/Salary-Prediction",
         },
@@ -511,6 +518,20 @@ export const translations: Record<string, any> = {
           link: "https://quera.org/certificate/3NJ7M3tK/",
         },
         {
+          name: "دنباله‌ها، سری‌های زمانی و پیش‌بینی",
+          issuer: "DeepLearning.AI (Coursera)",
+          date: "مرداد ۱۴۰۴",
+          details: [
+            "یادگیری مبانی تحلیل سری‌های زمانی و مدل‌سازی دنباله‌ها.",
+            "ساخت مدل‌های یادگیری عمیق با TensorFlow شامل RNN، LSTM و 1D ConvNet.",
+            "توسعه مدل پیش‌بینی لکه‌های خورشیدی با استفاده از داده‌های واقعی سری زمانی.",
+            "تجربه در ایجاد مجموعه داده‌های پنجره‌ای، تشخیص روند و پیش‌بینی.",
+            "درک نحوه بهینه‌سازی و ارزیابی مدل‌های پیش‌بینی با معیارهای مناسب.",
+          ],
+          tags: ["TensorFlow", "یادگیری عمیق", "پیش‌بینی سری زمانی", "شبکه‌های عصبی"],
+          link: "https://www.coursera.org/account/accomplishments/verify/KDXMDQIGNGJH",
+        },
+        {
           name: "پایگاه داده و SQL برای علم داده",
           issuer: "IBM",
           date: "آبان ۱۴۰۳ - دی ۱۴۰۳",
@@ -537,30 +558,22 @@ export const translations: Record<string, any> = {
           tags: ["Git", "GitHub"],
           link: "https://quera.org/media/public/certificate/d93b4054a1a64c7d83a385e63c8bc194.png",
         },
-        {
-          name: "دنباله‌ها، سری‌های زمانی و پیش‌بینی",
-          issuer: "DeepLearning.AI (Coursera)",
-          date: "مرداد ۱۴۰۴",
-          details: [
-            "یادگیری مبانی تحلیل سری‌های زمانی و مدل‌سازی دنباله‌ها.",
-            "ساخت مدل‌های یادگیری عمیق با TensorFlow شامل RNN، LSTM و 1D ConvNet.",
-            "توسعه مدل پیش‌بینی لکه‌های خورشیدی با استفاده از داده‌های واقعی سری زمانی.",
-            "تجربه در ایجاد مجموعه داده‌های پنجره‌ای، تشخیص روند و پیش‌بینی.",
-            "درک نحوه بهینه‌سازی و ارزیابی مدل‌های پیش‌بینی با معیارهای مناسب.",
-          ],
-          tags: ["TensorFlow", "یادگیری عمیق", "پیش‌بینی سری زمانی", "شبکه‌های عصبی"],
-          link: "https://www.coursera.org/account/accomplishments/verify/KDXMDQIGNGJH",
-        },
       ],
     },
     projects: {
       title: "پروژه‌های شخصی",
       items: [
         {
-          name: "چت‌بات مالی فارسی",
+          name: "چت‌ بات مالی فارسی",
           description: "چت‌بات مالی فارسی یک دستیار هوشمند مبتنی بر هوش مصنوعی است که با Streamlit ساخته شده و بینش‌های مالی بلادرنگ به زبان فارسی ارائه می‌دهد. کاربران می‌توانند ثبت‌نام کنند، وارد شوند و تاریخچه چت خود را پیگیری کنند. اطلاعات به‌روز بازار شامل قیمت سهام، نرخ ارز و ارزش طلا را از طریق نمودارهای بصری و پاسخ‌های مکالمه‌ای ارائه می‌دهد.",
           tags: ["تحلیل داده مالی", "یکپارچه‌سازی API", "وب‌اسکرپینگ", "تجسم‌سازی داده", "احراز هویت", "Streamlit", "LangChain", "Matplotlib", "BeautifulSoup", "SQLite"],
           link: "https://github.com/MohammadrezaSheikholeslami84/Persian-Financial-Chatbot",
+        },
+        {
+          name: "پروژهٔ هوش مصنوعی دیابت دانشگاه صنعتی امیرکبیر",
+          description: "طراحی یک پروژهٔ آموزشی هوش مصنوعی برای دانشجویان کارشناسی دانشگاه صنعتی امیرکبیر که شامل تحلیل اکتشافی داده‌ها، خوشه‌بندی و طبقه‌بندی بر روی یک مجموعه‌دادهٔ بالینی بزرگِ دیابت، به همراه ارزیابی مدل‌ها و تنظیم ابرپارامترها است.",
+          tags: ["تحلیل داده", "یادگیری ماشین", "تحلیل اکتشافی داده‌ها", "Scikit-Learn", "Pandas", "Matplotlib"],
+          link: "https://github.com/MohammadrezaSheikholeslami84/AUT-AI-Diabetes-Project",
         },
         {
           name: "طبقه‌بندی متن اخبار",

@@ -7,7 +7,7 @@ import WaveBackground from '@/components/WaveBackground';
 import { Send, Bot, User, Loader2, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import Plot from 'react-plotly.js';
+const Plot = lazy(() => import('react-plotly.js'));
 
 const CHATBOT_API_URL = import.meta.env.VITE_CHATBOT_API_URL || 'http://127.0.0.1:8000';
 
@@ -173,20 +173,22 @@ const ChatUI = () => {
                           const plotData = JSON.parse(msg.plotly_json);
                           return (
                             <div className="rounded-lg overflow-hidden bg-background/80 border border-[hsl(var(--glass-border))]">
-                              <Plot
-                                data={plotData.data || []}
-                                layout={{
-                                  ...(plotData.layout || {}),
-                                  autosize: true,
-                                  margin: { t: 30, r: 20, b: 40, l: 50 },
-                                  paper_bgcolor: 'transparent',
-                                  plot_bgcolor: 'transparent',
-                                  font: { family: 'inherit', color: 'hsl(var(--foreground))' },
-                                }}
-                                config={{ responsive: true, displayModeBar: false }}
-                                style={{ width: '100%', height: '300px' }}
-                                useResizeHandler
-                              />
+                              <Suspense fallback={<div className="w-full h-[300px] flex items-center justify-center"><Loader2 size={24} className="animate-spin text-muted-foreground" /></div>}>
+                                <Plot
+                                  data={plotData.data || []}
+                                  layout={{
+                                    ...(plotData.layout || {}),
+                                    autosize: true,
+                                    margin: { t: 30, r: 20, b: 40, l: 50 },
+                                    paper_bgcolor: 'transparent',
+                                    plot_bgcolor: 'transparent',
+                                    font: { family: 'inherit', color: 'hsl(var(--foreground))' },
+                                  }}
+                                  config={{ responsive: true, displayModeBar: false }}
+                                  style={{ width: '100%', height: '300px' }}
+                                  useResizeHandler
+                                />
+                              </Suspense>
                             </div>
                           );
                         } catch {

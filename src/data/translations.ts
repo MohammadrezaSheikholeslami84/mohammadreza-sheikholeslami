@@ -10,6 +10,7 @@ export const translations: Record<string, any> = {
       projects: "Projects",
       awards: "Awards",
       contact: "Contact",
+      chatbot: "Chatbot",
     },
     hero: {
       greeting: "Hello, I'm",
@@ -287,7 +288,12 @@ export const translations: Record<string, any> = {
       ],
     },
     chatbot: {
-      title: "Financial LLM Chatbot",
+      sectionTitle: "Financial LLM Chatbot",
+      title: "AI Chatbot",
+      subtitle: "Ask me anything about finance",
+      placeholder: "Type your message...",
+      clear: "Clear Chat",
+      empty: "Start a conversation!",
     },
     awards: {
       title: "Awards and Honors",
@@ -328,6 +334,7 @@ export const translations: Record<string, any> = {
       projects: "پروژه‌ها",
       awards: "جوایز",
       contact: "تماس",
+      chatbot: "چت‌بات",
     },
     hero: {
       greeting: "سلام, من محمدرضا شیخ الاسلامی هستم",
@@ -604,7 +611,12 @@ export const translations: Record<string, any> = {
       ],
     },
     chatbot: {
-      title: "چت‌بات مالی LLM",
+      sectionTitle: "چت‌بات مالی LLM",
+      title: "چت‌بات هوشمند",
+      subtitle: "هر سوالی درباره مالی دارید بپرسید",
+      placeholder: "پیام خود را بنویسید...",
+      clear: "پاک کردن",
+      empty: "یک مکالمه شروع کنید!",
     },
     awards: {
       title: "جوایز و افتخارات",

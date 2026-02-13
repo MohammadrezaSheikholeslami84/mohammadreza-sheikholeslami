@@ -21,7 +21,7 @@ const ChatbotSection = () => {
         transition={{ duration: 0.6, delay: 0.1 }}
       >
         <Bot className={`${isRTL ? 'ml-3' : 'mr-3'}`} size={28} />
-        {t('chatbot.title')}
+        {t('chatbot.sectionTitle')}
       </motion.h2>
       <motion.div
         className="w-full h-[500px] md:h-[800px] border border-[hsl(var(--glass-border))] rounded-lg overflow-hidden shadow-lg"

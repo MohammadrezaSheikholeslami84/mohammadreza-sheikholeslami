@@ -3,8 +3,9 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Menu, X, Mail, Github, Linkedin, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const navKeys = ['home', 'about', 'experience', 'education', 'skills', 'certifications', 'projects', 'awards', 'contact'];
+const navKeys = ['home', 'about', 'experience', 'education', 'skills', 'certifications', 'projects', 'awards', 'contact', 'chatbot'];
 
 const Navbar = () => {
   const { t, toggleLanguage, isRTL, language } = useLanguage();
@@ -12,17 +13,23 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
+    if (!isHomePage) return;
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sections = navKeys.map(key => document.getElementById(key)).filter(Boolean);
+      const scrollNavKeys = navKeys.filter(k => k !== 'chatbot');
+      const sections = scrollNavKeys.map(key => document.getElementById(key)).filter(Boolean);
       const scrollPos = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPos) {
-          setActiveSection(navKeys[i]);
+          setActiveSection(scrollNavKeys[i]);
           break;
         }
       }
@@ -30,10 +37,33 @@ const Navbar = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomePage]);
+
+  useEffect(() => {
+    if (location.pathname === '/chatbot') setActiveSection('chatbot');
+  }, [location.pathname]);
 
   const scrollTo = (id: string) => {
     setMobileOpen(false);
+
+    if (id === 'chatbot') {
+      navigate('/chatbot');
+      return;
+    }
+
+    if (!isHomePage) {
+      navigate('/');
+      // After navigation, scroll will happen on mount
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          const offset = id === 'home' ? 0 : el.offsetTop - 60;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+      }, 300);
+      return;
+    }
+
     const el = document.getElementById(id);
     if (el) {
       const offset = id === 'home' ? 0 : el.offsetTop - 60;

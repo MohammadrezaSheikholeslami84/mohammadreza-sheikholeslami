@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, lazy, Suspense } from 'react';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -7,6 +7,7 @@ import WaveBackground from '@/components/WaveBackground';
 import { Send, Bot, User, Loader2, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Plot from 'react-plotly.js';
 
 const CHATBOT_API_URL = import.meta.env.VITE_CHATBOT_API_URL || 'http://127.0.0.1:8000';
 
@@ -17,6 +18,7 @@ interface ChatMessage {
   content: string;
   type?: 'text' | 'image';
   caption?: string | null;
+  plotly_json?: string | null;
 }
 
 const STORAGE_KEY = 'chatbot_messages';
@@ -84,6 +86,7 @@ const ChatUI = () => {
         content: data.type === 'image' ? 'نمودار دریافت شد' : (data.answer || ''),
         type: data.type || 'text',
         caption: data.caption || null,
+        plotly_json: data.plotly_json || null,
       };
 
       setMessages(prev => [...prev, assistantMsg]);
@@ -152,7 +155,7 @@ const ChatUI = () => {
               transition={{ duration: 0.2 }}
               className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`flex items-start gap-2 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex items-start gap-2 ${msg.type === 'image' ? 'max-w-[95%]' : 'max-w-[85%]'} ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-1 ${
                   msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
                 }`}>
@@ -165,10 +168,41 @@ const ChatUI = () => {
                 }`}>
                   {msg.type === 'image' ? (
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-accent/50 border border-[hsl(var(--glass-border))]">
-                        <span className="text-lg">📊</span>
-                        <span className="font-medium">{msg.content}</span>
-                      </div>
+                      {msg.plotly_json ? (() => {
+                        try {
+                          const plotData = JSON.parse(msg.plotly_json);
+                          return (
+                            <div className="rounded-lg overflow-hidden bg-background/80 border border-[hsl(var(--glass-border))]">
+                              <Plot
+                                data={plotData.data || []}
+                                layout={{
+                                  ...(plotData.layout || {}),
+                                  autosize: true,
+                                  margin: { t: 30, r: 20, b: 40, l: 50 },
+                                  paper_bgcolor: 'transparent',
+                                  plot_bgcolor: 'transparent',
+                                  font: { family: 'inherit', color: 'hsl(var(--foreground))' },
+                                }}
+                                config={{ responsive: true, displayModeBar: false }}
+                                style={{ width: '100%', height: '300px' }}
+                                useResizeHandler
+                              />
+                            </div>
+                          );
+                        } catch {
+                          return (
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-accent/50 border border-[hsl(var(--glass-border))]">
+                              <span className="text-lg">📊</span>
+                              <span className="font-medium">خطا در نمایش نمودار</span>
+                            </div>
+                          );
+                        }
+                      })() : (
+                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-accent/50 border border-[hsl(var(--glass-border))]">
+                          <span className="text-lg">📊</span>
+                          <span className="font-medium">{msg.content}</span>
+                        </div>
+                      )}
                       {msg.caption && (
                         <p className="text-xs text-muted-foreground">{msg.caption}</p>
                       )}
